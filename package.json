@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/muk-ai/twitter-ego-search-with-gas/issues"
   },
-  "homepage": "https://github.com/muk-ai/twitter-ego-search-with-gas#readme"
+  "homepage": "https://github.com/muk-ai/twitter-ego-search-with-gas#readme",
+  "dependencies": {
+    "@google/clasp": "^1.0.7"
+  }
 }
