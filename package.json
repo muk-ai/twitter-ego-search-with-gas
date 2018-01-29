@@ -18,5 +18,8 @@
   "homepage": "https://github.com/muk-ai/twitter-ego-search-with-gas#readme",
   "dependencies": {
     "@google/clasp": "^1.0.7"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.2"
   }
 }
