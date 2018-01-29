@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run tsc && mv clasp-project1/Code.js clasp-project1/Code.gs",
+    "push": "(cd clasp-project1 && clasp push)",
     "tsc": "tsc"
   },
   "repository": {
