@@ -1,3 +1,6 @@
 function myFunction() {
-  Logger.log('hello, world');
+  const url = PropertiesService.getScriptProperties().getProperty('webhook_url');
+  if (url) {
+    Logger.log(url);
+  }
 }

@@ -1,4 +1,7 @@
 "use strict";
 function myFunction() {
-    Logger.log('hello, world');
+    var url = PropertiesService.getScriptProperties().getProperty('webhook_url');
+    if (url) {
+        Logger.log(url);
+    }
 }
