@@ -1,0 +1,19 @@
+{
+  "name": "twitter-ego-search-with-gas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muk-ai/twitter-ego-search-with-gas.git"
+  },
+  "author": "Kenta Mukai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/muk-ai/twitter-ego-search-with-gas/issues"
+  },
+  "homepage": "https://github.com/muk-ai/twitter-ego-search-with-gas#readme"
+}
