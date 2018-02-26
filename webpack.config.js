@@ -1,4 +1,5 @@
 const path = require('path');
+const GasPlugin = require('gas-webpack-plugin');
 
 module.exports = {
   entry: './src/Code.ts',
@@ -13,5 +14,8 @@ module.exports = {
         use: 'awesome-typescript-loader'
       }
     ]
-  }
+  },
+  plugins: [
+    new GasPlugin(),
+  ],
 };
