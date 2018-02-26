@@ -22,7 +22,7 @@ function postUrlToSlack(text: string) {
 
   const jsonData = {
     username: 'bot-x',
-    icon_emoji: ':chicken:',
+    icon_emoji: ':twitter_bird:',
     text: text,
   }
   const payload = JSON.stringify(jsonData);
