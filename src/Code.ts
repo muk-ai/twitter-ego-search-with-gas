@@ -1,4 +1,5 @@
 declare var global: any;
+// NOTE: if you install '@types/node', it will couse error
 
 global.myFunction = function myFunction() {
   const url = PropertiesService.getScriptProperties().getProperty('webhook_url');
