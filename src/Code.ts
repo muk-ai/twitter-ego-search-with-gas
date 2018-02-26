@@ -7,13 +7,12 @@ global.myFunction = function myFunction() {
 
   if (tweets.statuses.length === 0) { return; }
 
+  const latest_tweet = tweets.statuses[0] // NOTE: reverse() is destructive method.
   for (const status of tweets.statuses.reverse()) {
     const tweet_url = `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`;
     Logger.log(tweet_url);
     postUrlToSlack(tweet_url);
   }
-
-  const latest_tweet = tweets.statuses[0]
   PropertiesService.getScriptProperties().setProperty('latest_tweet_id', latest_tweet.id_str);
 }
 
@@ -58,11 +57,15 @@ function getBearerToken(): string {
 
 function searchTwitter(bearerToken: string) {
   const apiUrl = 'https://api.twitter.com/1.1/search/tweets.json';
-  const params: {[key: string]: string} = {
+  const params: {[key: string]: string | null} = {
     result_type: 'recent',
     q: encodeURIComponent('vivivit OR ビビビット exclude:retweets'),
+    since_id: getLatestTweetId()
   }
-  const query = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
+  const query = Object.keys(params)
+                      .filter((key) => params[key])
+                      .map(key => `${key}=${params[key]}`)
+                      .join('&');
   const url = `${apiUrl}?${query}`;
   Logger.log(url);
   var apiOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
@@ -82,4 +85,8 @@ function searchTwitter(bearerToken: string) {
     Logger.log(response);
     return { statuses: [] };
   }
+}
+
+function getLatestTweetId() {
+  return PropertiesService.getScriptProperties().getProperty('latest_tweet_id');
 }
