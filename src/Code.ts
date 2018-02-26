@@ -7,7 +7,7 @@ global.myFunction = function myFunction() {
 
   if (tweets.statuses.length === 0) { return; }
 
-  for (const status of tweets.statuses) {
+  for (const status of tweets.statuses.reverse()) {
     const tweet_url = `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`;
     Logger.log(tweet_url);
     postUrlToSlack(tweet_url);
