@@ -5,11 +5,16 @@ global.myFunction = function myFunction() {
   const token = getBearerToken();
   const tweets = searchTwitter(token);
 
+  if (tweets.statuses.length === 0) { return; }
+
   for (const status of tweets.statuses) {
     const tweet_url = `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`;
     Logger.log(tweet_url);
     postUrlToSlack(tweet_url);
   }
+
+  const latest_tweet = tweets.statuses[0]
+  PropertiesService.getScriptProperties().setProperty('latest_tweet_id', latest_tweet.id_str);
 }
 
 function postUrlToSlack(text: string) {
