@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# result of building
+clasp-project1/*.gs
+
