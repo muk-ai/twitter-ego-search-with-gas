@@ -15,8 +15,8 @@ function postSlack(url: string) {
     text: 'test',
   }
   const payload = JSON.stringify(jsonData);
-  const options = {
-    method: 'post' as 'post', // こう書くとなぜかtypescriptのcheckを通る
+  const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+    method: 'post',
     contentType: 'application/json',
     payload: payload,
   }
