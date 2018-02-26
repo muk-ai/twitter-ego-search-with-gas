@@ -21,7 +21,7 @@ function postUrlToSlack(text: string) {
   if (!url) { return; }
 
   const jsonData = {
-    username: 'bot-x',
+    username: 'twivit',
     icon_emoji: ':twitter_bird:',
     text: text,
   }
