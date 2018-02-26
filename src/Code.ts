@@ -55,10 +55,11 @@ function searchTwitter(bearerToken: string) {
   const apiUrl = 'https://api.twitter.com/1.1/search/tweets.json';
   const params: {[key: string]: string} = {
     result_type: 'recent',
-    q: 'vivivit OR ビビビット',
+    q: 'vivivit OR ビビビット exclude:retweets',
   }
   const query = Object.keys(params).map(key => `${key}=${params[key]}`).join('&');
   const url = `${apiUrl}?${query}`;
+  Logger.log(url);
   var apiOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     headers: {
       Authorization: `Bearer ${bearerToken}`
