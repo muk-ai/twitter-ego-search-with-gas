@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "push": "(cd clasp-project1 && clasp push)"
+    "push": "(cd clasp-project1 && clasp push)",
+    "build_and_push": "npm run build && npm run push"
   },
   "repository": {
     "type": "git",
