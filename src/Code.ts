@@ -1,7 +1,4 @@
-declare var global: any;
-// NOTE: if you install '@types/node', it will couse error
-
-global.myFunction = function myFunction() {
+function main() {
   const token = getBearerToken();
   const tweets = searchTwitter(token);
 
@@ -19,7 +16,7 @@ global.myFunction = function myFunction() {
     "latest_tweet_id",
     latest_tweet.id_str
   );
-};
+}
 
 function postUrlToSlack(text: string) {
   const url = PropertiesService.getScriptProperties().getProperty(
