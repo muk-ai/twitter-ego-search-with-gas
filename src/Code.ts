@@ -1,3 +1,5 @@
+const IGNORE_SCREEN_NAME_LIST = ["Vivivit_"];
+
 function main() {
   const token = getBearerToken();
   const tweets = searchTwitter(token);
@@ -8,7 +10,12 @@ function main() {
 
   const latest_tweet = tweets.statuses[0]; // NOTE: reverse() is destructive method.
   for (const status of tweets.statuses.reverse()) {
-    const tweet_url = `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`;
+    const screenName = status.user.screen_name;
+    const tweet_url = `https://twitter.com/${screenName}/status/${status.id_str}`;
+    if (IGNORE_SCREEN_NAME_LIST.includes(screenName)) {
+      Logger.log(`ignore ${tweet_url}`);
+      continue;
+    }
     Logger.log(tweet_url);
     postUrlToSlack(tweet_url);
   }
