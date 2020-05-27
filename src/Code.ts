@@ -1,78 +1,90 @@
-declare var global: any;
-// NOTE: if you install '@types/node', it will couse error
-
-global.myFunction = function myFunction() {
+function main() {
   const token = getBearerToken();
   const tweets = searchTwitter(token);
 
-  if (tweets.statuses.length === 0) { return; }
+  if (tweets.statuses.length === 0) {
+    return;
+  }
 
-  const latest_tweet = tweets.statuses[0] // NOTE: reverse() is destructive method.
+  const latest_tweet = tweets.statuses[0]; // NOTE: reverse() is destructive method.
   for (const status of tweets.statuses.reverse()) {
     const tweet_url = `https://twitter.com/${status.user.screen_name}/status/${status.id_str}`;
     Logger.log(tweet_url);
     postUrlToSlack(tweet_url);
   }
-  PropertiesService.getScriptProperties().setProperty('latest_tweet_id', latest_tweet.id_str);
+  PropertiesService.getScriptProperties().setProperty(
+    "latest_tweet_id",
+    latest_tweet.id_str
+  );
 }
 
 function postUrlToSlack(text: string) {
-  const url = PropertiesService.getScriptProperties().getProperty('webhook_url');
-  if (!url) { return; }
+  const url = PropertiesService.getScriptProperties().getProperty(
+    "webhook_url"
+  );
+  if (!url) {
+    return;
+  }
 
   const jsonData = {
-    username: 'twivit',
-    icon_emoji: ':twitter_bird:',
+    username: "twivit",
+    icon_emoji: ":twitter_bird:",
     text: text,
-  }
+  };
   const payload = JSON.stringify(jsonData);
   const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
-    method: 'post',
-    contentType: 'application/json',
+    method: "post",
+    contentType: "application/json",
     payload: payload,
-  }
+  };
   UrlFetchApp.fetch(url, options);
 }
 
 function getBearerToken(): string {
-  const CONSUMER_KEY = PropertiesService.getScriptProperties().getProperty('twitter_consumer_key');
-  const CONSUMER_SECRET = PropertiesService.getScriptProperties().getProperty('twitter_consumer_secret');
+  const CONSUMER_KEY = PropertiesService.getScriptProperties().getProperty(
+    "twitter_consumer_key"
+  );
+  const CONSUMER_SECRET = PropertiesService.getScriptProperties().getProperty(
+    "twitter_consumer_secret"
+  );
 
   const tokenUrl = "https://api.twitter.com/oauth2/token";
-  const tokenCredential = Utilities.base64EncodeWebSafe(CONSUMER_KEY + ":" + CONSUMER_SECRET);
+  const tokenCredential = Utilities.base64EncodeWebSafe(
+    CONSUMER_KEY + ":" + CONSUMER_SECRET
+  );
 
   const tokenOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     headers: {
       Authorization: `Basic ${tokenCredential}`,
-      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" 
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
     },
     method: "post",
-    payload: "grant_type=client_credentials"
+    payload: "grant_type=client_credentials",
   };
-  
+
   const response = UrlFetchApp.fetch(tokenUrl, tokenOptions);
   const parsedToken = JSON.parse(response.getContentText());
   return parsedToken.access_token;
 }
 
 function searchTwitter(bearerToken: string) {
-  const apiUrl = 'https://api.twitter.com/1.1/search/tweets.json';
-  const params: {[key: string]: string | null} = {
-    result_type: 'recent',
-    q: encodeURIComponent('vivivit OR ビビビット exclude:retweets'),
-    since_id: getLatestTweetId()
-  }
+  const apiUrl = "https://api.twitter.com/1.1/search/tweets.json";
+  const params: { [key: string]: string | null } = {
+    result_type: "recent",
+    q: encodeURIComponent("vivivit OR ビビビット exclude:retweets"),
+    since_id: getLatestTweetId(),
+  };
   const query = Object.keys(params)
-                      .filter((key) => params[key])
-                      .map(key => `${key}=${params[key]}`)
-                      .join('&');
+    .filter((key) => params[key])
+    .map((key) => `${key}=${params[key]}`)
+    .join("&");
   const url = `${apiUrl}?${query}`;
   Logger.log(url);
   var apiOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     headers: {
-      Authorization: `Bearer ${bearerToken}`
+      Authorization: `Bearer ${bearerToken}`,
     },
-    method: "get"
+    method: "get",
   };
 
   var response = UrlFetchApp.fetch(url, apiOptions);
@@ -88,5 +100,5 @@ function searchTwitter(bearerToken: string) {
 }
 
 function getLatestTweetId() {
-  return PropertiesService.getScriptProperties().getProperty('latest_tweet_id');
+  return PropertiesService.getScriptProperties().getProperty("latest_tweet_id");
 }
