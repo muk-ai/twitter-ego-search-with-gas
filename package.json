@@ -1,0 +1,26 @@
+{
+  "name": "twitter-ego-search-with-gas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/muk-ai/twitter-ego-search-with-gas.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muk-ai/twitter-ego-search-with-gas/issues"
+  },
+  "homepage": "https://github.com/muk-ai/twitter-ego-search-with-gas#readme",
+  "devDependencies": {
+    "@google/clasp": "^2.3.0"
+  },
+  "dependencies": {
+    "@types/google-apps-script": "^1.0.14"
+  }
+}
