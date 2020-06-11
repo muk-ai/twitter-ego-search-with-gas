@@ -1,4 +1,4 @@
-const IGNORE_SCREEN_NAME_LIST = ["Vivivit_"];
+const IGNORE_SCREEN_NAME_LIST = ["Vivivit_", "Vivivit___"];
 
 function main() {
   const token = getBearerToken();
