@@ -1,4 +1,5 @@
 const IGNORE_SCREEN_NAME_LIST = ["Vivivit_", "Vivivit___"];
+const NG_WORD_LIST = ["@Vivivit___"];
 
 function main() {
   const token = getBearerToken();
@@ -13,6 +14,18 @@ function main() {
     const screenName = status.user.screen_name;
     const tweet_url = `https://twitter.com/${screenName}/status/${status.id_str}`;
     if (IGNORE_SCREEN_NAME_LIST.includes(screenName)) {
+      Logger.log(`ignore screen name matched: ${screenName}`);
+      Logger.log(`ignore ${tweet_url}`);
+      continue;
+    }
+    const matchedNgWords = [];
+    NG_WORD_LIST.forEach((ngWord) => {
+      if (status.text.includes(ngWord)) {
+        matchedNgWords.push(ngWord);
+      }
+    });
+    if (matchedNgWords.length > 0) {
+      Logger.log(`NG word matched: ${matchedNgWords}`);
       Logger.log(`ignore ${tweet_url}`);
       continue;
     }
