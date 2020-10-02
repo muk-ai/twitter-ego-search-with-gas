@@ -91,7 +91,7 @@ function searchTwitter(bearerToken: string) {
   const apiUrl = "https://api.twitter.com/1.1/search/tweets.json";
   const params: { [key: string]: string | null } = {
     result_type: "recent",
-    q: encodeURIComponent("vivivit OR ビビビット exclude:retweets"),
+    q: encodeURIComponent(getQuery()),
     since_id: getLatestTweetId(),
   };
   const query = Object.keys(params)
@@ -121,4 +121,9 @@ function searchTwitter(bearerToken: string) {
 
 function getLatestTweetId() {
   return PropertiesService.getScriptProperties().getProperty("latest_tweet_id");
+}
+
+function getQuery() {
+  // NOTE: example "rust OR python lang:ja exclude:retweets"
+  return PropertiesService.getScriptProperties().getProperty("query");
 }
