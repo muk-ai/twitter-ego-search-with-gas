@@ -93,6 +93,7 @@ function searchTwitter(bearerToken: string) {
     result_type: "recent",
     q: encodeURIComponent(getQuery()),
     since_id: getLatestTweetId(),
+    until: getUntil(),
   };
   const query = Object.keys(params)
     .filter((key) => params[key])
@@ -126,4 +127,18 @@ function getLatestTweetId() {
 function getQuery() {
   // NOTE: example "rust OR python lang:ja exclude:retweets"
   return PropertiesService.getScriptProperties().getProperty("query");
+}
+
+function getUntil() {
+  // NOTE: tweetが検索に引っかかるようになるまでにラグがあるためtweetを飛ばしてしまうことがある。
+  //       5分間のディレイを入れることで軽減しようという意図。
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - 5);
+  const yyyy = now.getFullYear();
+  const MM = ('0' + (now.getMonth() + 1)).slice(-2);
+  const dd = ('0' + now.getDate()).slice(-2);
+  const HH = ('0' + now.getHours()).slice(-2);
+  const mm = ('0' + now.getMinutes()).slice(-2);
+  const ss = ('0' + now.getSeconds()).slice(-2);
+  return `${yyyy}-${MM}-${dd}_${HH}:${mm}:${ss}_JST`;
 }
