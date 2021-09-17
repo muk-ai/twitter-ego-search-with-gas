@@ -126,7 +126,9 @@ function getLatestTweetId() {
 
 function getQuery() {
   // NOTE: example "rust OR python lang:ja exclude:retweets"
-  return PropertiesService.getScriptProperties().getProperty("query");
+  const query = PropertiesService.getScriptProperties().getProperty("query");
+  Logger.log(`query: ${query}`);
+  return query;
 }
 
 function getUntil() {
