@@ -109,7 +109,6 @@ function searchTwitter(bearerToken: string) {
   };
 
   var response = UrlFetchApp.fetch(url, apiOptions);
-  var result = "";
 
   if (response.getResponseCode() == 200) {
     var tweets = JSON.parse(response.getContentText());
