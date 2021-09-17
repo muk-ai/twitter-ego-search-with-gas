@@ -101,18 +101,17 @@ function searchTwitter(bearerToken: string) {
     .join("&");
   const url = `${apiUrl}?${query}`;
   Logger.log(url);
-  var apiOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
+  const apiOptions: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
     headers: {
       Authorization: `Bearer ${bearerToken}`,
     },
     method: "get",
   };
 
-  var response = UrlFetchApp.fetch(url, apiOptions);
-  var result = "";
+  const response = UrlFetchApp.fetch(url, apiOptions);
 
   if (response.getResponseCode() == 200) {
-    var tweets = JSON.parse(response.getContentText());
+    const tweets = JSON.parse(response.getContentText());
     return tweets;
   } else {
     Logger.log(response);
@@ -126,7 +125,9 @@ function getLatestTweetId() {
 
 function getQuery() {
   // NOTE: example "rust OR python lang:ja exclude:retweets"
-  return PropertiesService.getScriptProperties().getProperty("query");
+  const query = PropertiesService.getScriptProperties().getProperty("query");
+  Logger.log(`query: ${query}`);
+  return query;
 }
 
 function getUntil() {
