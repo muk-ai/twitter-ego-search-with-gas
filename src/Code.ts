@@ -1,5 +1,5 @@
-const IGNORE_SCREEN_NAME_LIST = ["Vivivit_", "Vivivit___", "viviVit_"];
-const NG_WORD_LIST = ["@Vivivit_", "@Vivivit___", "@viviVit_"];
+const IGNORE_SCREEN_NAME_LIST = ["Vivivit_", "Vivivit___", "viviVit_", "ViViViT_524"];
+const NG_WORD_LIST = ["@Vivivit_", "@Vivivit___", "@viviVit_", "@ViViViT_524"];
 
 function main() {
   const token = getBearerToken();
