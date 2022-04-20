@@ -89,11 +89,12 @@ function getBearerToken(): string {
 
 function searchTwitter(bearerToken: string) {
   const apiUrl = "https://api.twitter.com/1.1/search/tweets.json";
-  const params: { [key: string]: string | null } = {
+  const params: { [key: string]: string | number | null } = {
     result_type: "recent",
     q: encodeURIComponent(getQuery()),
     since_id: getLatestTweetId(),
     until: getUntil(),
+    count: 100
   };
   const query = Object.keys(params)
     .filter((key) => params[key])
