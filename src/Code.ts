@@ -7,7 +7,8 @@ function main() {
   }
 
   const ignoreScreenNameList = getIgnoreScreenNameList();
-  const ngWordList = ignoreScreenNameList.map((name) => `@${name}`);
+  let ngWordList = getNgWordList();
+  ngWordList = ngWordList.concat(ignoreScreenNameList.map((name) => `@${name}`));
 
   const latest_tweet = tweets.statuses[0]; // NOTE: reverse() is destructive method.
   for (const status of tweets.statuses.reverse()) {
@@ -153,6 +154,18 @@ function getIgnoreScreenNameList() {
     return list.split(',');
   } else {
     Logger.log("ignore_screen_name_list: []");
+    return [];
+  }
+}
+
+function getNgWordList() {
+  // NOTE: expect comma-separated string "hoge,fuga"
+  const list = PropertiesService.getScriptProperties().getProperty("ng_word_list");
+  if (list) {
+    Logger.log(`ng_word_list: ${list}`);
+    return list.split(',');
+  } else {
+    Logger.log("ng_word_list: []");
     return [];
   }
 }
