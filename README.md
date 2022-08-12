@@ -37,4 +37,11 @@ $ npx clasp push
 - query
   - Twitterを検索するクエリ
   - ex. `rust OR python lang:ja exclude:retweets`
-
+- ignore_screen_name_list
+  - 除外したいTwitterのアカウント
+  - カンマ区切り
+  - ex. `hoge,fuga`
+- ng_word_list
+  - 除外したい単語
+  - カンマ区切り
+  - ex. `hoge,fuga`
