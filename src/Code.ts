@@ -1,6 +1,3 @@
-const IGNORE_SCREEN_NAME_LIST = ["Vivivit_", "Vivivit___", "viviVit_", "ViViViT_524"];
-const NG_WORD_LIST = ["@Vivivit_", "@Vivivit___", "@viviVit_", "@ViViViT_524"];
-
 function main() {
   const token = getBearerToken();
   const tweets = searchTwitter(token);
@@ -9,17 +6,21 @@ function main() {
     return;
   }
 
+  const ignoreScreenNameList = getIgnoreScreenNameList();
+  let ngWordList = getNgWordList();
+  ngWordList = ngWordList.concat(ignoreScreenNameList.map((name) => `@${name}`));
+
   const latest_tweet = tweets.statuses[0]; // NOTE: reverse() is destructive method.
   for (const status of tweets.statuses.reverse()) {
     const screenName = status.user.screen_name;
     const tweet_url = `https://twitter.com/${screenName}/status/${status.id_str}`;
-    if (IGNORE_SCREEN_NAME_LIST.includes(screenName)) {
+    if (ignoreScreenNameList.includes(screenName)) {
       Logger.log(`ignore screen name matched: ${screenName}`);
       Logger.log(`ignore ${tweet_url}`);
       continue;
     }
     const matchedNgWords = [];
-    NG_WORD_LIST.forEach((ngWord) => {
+    ngWordList.forEach((ngWord) => {
       if (status.text.includes(ngWord)) {
         matchedNgWords.push(ngWord);
       }
@@ -143,4 +144,28 @@ function getUntil() {
   const mm = ('0' + now.getMinutes()).slice(-2);
   const ss = ('0' + now.getSeconds()).slice(-2);
   return `${yyyy}-${MM}-${dd}_${HH}:${mm}:${ss}_JST`;
+}
+
+function getIgnoreScreenNameList() {
+  // NOTE: expect comma-separated string "hoge,fuga"
+  const list = PropertiesService.getScriptProperties().getProperty("ignore_screen_name_list");
+  if (list) {
+    Logger.log(`ignore_screen_name_list: ${list}`);
+    return list.split(',');
+  } else {
+    Logger.log("ignore_screen_name_list: []");
+    return [];
+  }
+}
+
+function getNgWordList() {
+  // NOTE: expect comma-separated string "hoge,fuga"
+  const list = PropertiesService.getScriptProperties().getProperty("ng_word_list");
+  if (list) {
+    Logger.log(`ng_word_list: ${list}`);
+    return list.split(',');
+  } else {
+    Logger.log("ng_word_list: []");
+    return [];
+  }
 }
